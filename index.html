@@ -1,412 +1,982 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aditya Wagh | Backend Developer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #08090f; color: #e2e8f0; scroll-behavior: smooth; }
-        .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); }
-        .project-card { transition: all 0.3s ease; }
-        .project-card:hover { border-color: #3b82f6; background: rgba(59, 130, 246, 0.04); transform: translateY(-4px); }
-        .nav-scrolled { background: rgba(8, 9, 15, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aditya Wagh | Java & Backend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg:      #060608;
+  --bg1:     #0d0d12;
+  --bg2:     #13131a;
+  --bg3:     #1a1a24;
+  --border:  rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.11);
+  --text:    #eeeef0;
+  --text2:   #8888a0;
+  --text3:   #44445a;
+  --green:   #00e5a0;
+  --green2:  rgba(0,229,160,0.08);
+  --green3:  rgba(0,229,160,0.18);
+  --amber:   #ffb347;
+  --blue:    #4f8ef7;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Space Grotesk',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  cursor:none;
+}
+
+/* ── CUSTOM CURSOR ── */
+#cursor{
+  position:fixed;width:10px;height:10px;
+  background:var(--green);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform .1s,width .2s,height .2s,background .2s;
+  mix-blend-mode:difference;
+}
+#cursor-ring{
+  position:fixed;width:36px;height:36px;
+  border:1.5px solid rgba(0,229,160,0.4);
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform .18s ease,width .25s,height .25s,opacity .2s;
+}
+body:hover #cursor{opacity:1}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--green);border-radius:2px}
+
+/* ── NOISE OVERLAY ── */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
+  opacity:.02;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px;
+}
+
+/* ── GRID BG ── */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(0,229,160,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,229,160,0.025) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  padding:1.2rem 2.5rem;
+  background:rgba(6,6,8,0);
+  transition:background .4s,backdrop-filter .4s,border-color .4s;
+  border-bottom:1px solid transparent;
+}
+nav.scrolled{
+  background:rgba(6,6,8,0.85);
+  backdrop-filter:blur(20px);
+  border-color:var(--border);
+}
+.nav-inner{
+  max-width:1100px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.5rem;letter-spacing:.08em;color:var(--text);
+  text-decoration:none;
+}
+.nav-logo span{color:var(--green)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;color:var(--text2);text-decoration:none;
+  letter-spacing:.1em;text-transform:uppercase;
+  transition:color .2s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-3px;left:0;right:100%;
+  height:1px;background:var(--green);transition:right .25s ease;
+}
+.nav-links a:hover{color:var(--green)}
+.nav-links a:hover::after{right:0}
+.nav-cta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;font-weight:500;
+  color:var(--green);border:1px solid var(--green3);
+  background:var(--green2);
+  padding:9px 22px;border-radius:4px;
+  text-decoration:none;letter-spacing:.08em;
+  transition:all .2s;
+}
+.nav-cta:hover{background:var(--green);color:var(--bg);box-shadow:0 0 20px var(--green3)}
+
+/* ── HERO ── */
+#about{
+  min-height:100vh;position:relative;z-index:1;
+  display:flex;align-items:center;
+  max-width:1100px;margin:0 auto;
+  padding:120px 2.5rem 80px;
+}
+.hero-grid{
+  display:grid;grid-template-columns:1fr 360px;
+  gap:5rem;align-items:center;width:100%;
+}
+.hero-status{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--green);
+  background:var(--green2);border:1px solid var(--green3);
+  padding:7px 16px;border-radius:100px;
+  margin-bottom:1.75rem;
+}
+.hero-status-dot{
+  width:6px;height:6px;background:var(--green);
+  border-radius:50%;animation:blink 1.8s ease infinite;
+}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 rgba(0,229,160,0)}50%{opacity:.6;box-shadow:0 0 8px var(--green)}}
+
+.hero-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(4rem,9vw,7.5rem);
+  line-height:.92;letter-spacing:.02em;
+  color:var(--text);margin-bottom:1.5rem;
+}
+.hero-name .accent{color:var(--green);display:block}
+
+.hero-role{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.85rem;color:var(--text2);
+  margin-bottom:1.5rem;letter-spacing:.04em;
+}
+.hero-role span{color:var(--green)}
+
+.hero-bio{
+  font-size:.97rem;color:var(--text2);
+  line-height:1.85;max-width:500px;
+  margin-bottom:2rem;font-weight:300;
+}
+
+.hero-tags{
+  display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem;
+}
+.hero-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;color:var(--text2);
+  background:var(--bg2);border:1px solid var(--border);
+  padding:5px 12px;border-radius:4px;
+  transition:all .2s;letter-spacing:.06em;
+}
+.hero-tag:hover{border-color:var(--green);color:var(--green);background:var(--green2)}
+
+.hero-actions{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
+.btn-primary{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  background:var(--green);color:var(--bg);
+  padding:13px 32px;border-radius:4px;
+  text-decoration:none;transition:all .25s;
+}
+.btn-primary:hover{box-shadow:0 0 30px rgba(0,229,160,.3);transform:translateY(-2px)}
+.btn-ghost{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text2);border:1px solid var(--border2);
+  padding:12px 28px;border-radius:4px;
+  text-decoration:none;background:transparent;
+  transition:all .2s;
+}
+.btn-ghost:hover{border-color:var(--green);color:var(--green)}
+
+.hero-socials{display:flex;gap:.75rem;margin-top:.5rem}
+.hero-socials a{
+  width:38px;height:38px;border-radius:4px;
+  border:1px solid var(--border2);background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text2);font-size:.9rem;text-decoration:none;
+  transition:all .2s;
+}
+.hero-socials a:hover{border-color:var(--green);color:var(--green);background:var(--green2)}
+
+/* Photo */
+.hero-photo-wrap{position:relative}
+.hero-photo-frame{
+  width:100%;aspect-ratio:4/5;
+  border-radius:8px;overflow:hidden;
+  border:1px solid var(--border2);
+  position:relative;
+}
+.hero-photo-frame::before{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to bottom,transparent 50%,rgba(6,6,8,.7));
+}
+.hero-photo-frame img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;filter:brightness(.88) saturate(.9);
+}
+.hero-photo-corner{
+  position:absolute;top:-8px;right:-8px;
+  width:40px;height:40px;
+  border-top:2px solid var(--green);
+  border-right:2px solid var(--green);
+  border-radius:0 6px 0 0;
+}
+.hero-photo-corner2{
+  position:absolute;bottom:-8px;left:-8px;
+  width:40px;height:40px;
+  border-bottom:2px solid var(--green);
+  border-left:2px solid var(--green);
+  border-radius:0 0 0 6px;
+}
+.hero-stat{
+  position:absolute;bottom:-20px;right:-20px;
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:8px;padding:14px 18px;
+  box-shadow:0 12px 40px rgba(0,0,0,.5);
+  display:flex;align-items:center;gap:10px;
+}
+.hero-stat-icon{font-size:1.1rem;color:var(--amber)}
+.hero-stat-num{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--text);line-height:1}
+.hero-stat-label{font-size:.62rem;color:var(--text2);font-family:'JetBrains Mono',monospace;letter-spacing:.08em}
+
+/* ── SECTION COMMON ── */
+.section{
+  max-width:1100px;margin:0 auto;
+  padding:90px 2.5rem;position:relative;z-index:1;
+}
+.sec-line{height:1px;background:var(--border);max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.sec-head{margin-bottom:3rem}
+.sec-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--green);margin-bottom:.6rem;
+}
+.sec-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.2rem,5vw,3.2rem);
+  letter-spacing:.04em;color:var(--text);
+  line-height:1;
+}
+
+/* ── STATS STRIP ── */
+.stats-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;border:1px solid var(--border);
+  border-radius:8px;overflow:hidden;
+  background:var(--bg1);
+}
+.stat-block{
+  padding:2rem 1.5rem;text-align:center;
+  border-right:1px solid var(--border);
+  transition:background .25s;
+}
+.stat-block:last-child{border-right:none}
+.stat-block:hover{background:var(--bg2)}
+.stat-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:3rem;color:var(--green);line-height:1;
+  margin-bottom:.4rem;
+}
+.stat-label{font-size:.72rem;color:var(--text2);font-family:'JetBrains Mono',monospace;letter-spacing:.08em}
+
+/* ── SKILLS ── */
+.skills-container{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.skill-group-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--green);margin-bottom:1rem;
+}
+.skill-pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.skill-pill{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;letter-spacing:.04em;
+  padding:7px 14px;border-radius:4px;
+  border:1px solid var(--border);background:var(--bg2);
+  color:var(--text2);transition:all .2s;display:flex;
+  align-items:center;gap:.5rem;
+}
+.skill-pill:hover{border-color:var(--green);color:var(--green);background:var(--green2)}
+.skill-pill i{font-size:.85rem}
+.learning-strip{
+  margin-top:2.5rem;
+  background:var(--bg1);border:1px solid var(--border);
+  border-left:3px solid var(--green);
+  border-radius:6px;padding:1.5rem 2rem;
+}
+.learning-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:1rem;
+}
+.learning-pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.learning-pill{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;padding:5px 12px;border-radius:4px;
+  border:1px solid rgba(255,179,71,.2);
+  background:rgba(255,179,71,.05);color:var(--amber);
+  letter-spacing:.04em;
+}
+
+/* ── EXPERIENCE ── */
+.exp-card{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:8px;padding:2.5rem;position:relative;
+  overflow:hidden;
+}
+.exp-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--green),transparent 60%);
+}
+.exp-header{
+  display:flex;justify-content:space-between;
+  align-items:flex-start;margin-bottom:2rem;gap:1rem;
+}
+.exp-role{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.8rem;letter-spacing:.04em;color:var(--text);
+}
+.exp-company{font-size:.85rem;color:var(--green);font-weight:500;margin-top:.25rem}
+.exp-badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text2);background:var(--bg3);border:1px solid var(--border);
+  padding:7px 16px;border-radius:4px;white-space:nowrap;flex-shrink:0;
+}
+.exp-list{list-style:none}
+.exp-item{
+  padding:.75rem 0 .75rem 1.4rem;
+  border-bottom:1px solid var(--border);
+  font-size:.875rem;color:var(--text2);line-height:1.7;
+  position:relative;
+}
+.exp-item:last-child{border-bottom:none;padding-bottom:0}
+.exp-item::before{
+  content:'▸';position:absolute;left:0;
+  color:var(--green);font-size:.7rem;top:.85rem;
+}
+
+/* ── PROJECTS ── */
+.projects-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.25rem;
+}
+.proj-card{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:8px;padding:1.75rem;
+  display:flex;flex-direction:column;
+  transition:all .3s ease;
+  position:relative;overflow:hidden;
+}
+.proj-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:radial-gradient(ellipse at 0% 0%,var(--green2),transparent 70%);
+  opacity:0;transition:opacity .3s;
+}
+.proj-card:hover{
+  border-color:rgba(0,229,160,.3);
+  transform:translateY(-6px);
+  box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 0 1px rgba(0,229,160,.1);
+}
+.proj-card:hover::before{opacity:1}
+.proj-num{
+  font-family:'Bebas Neue',sans-serif;font-size:2.5rem;
+  color:var(--bg3);line-height:1;margin-bottom:.75rem;
+  position:relative;z-index:1;transition:color .3s;
+}
+.proj-card:hover .proj-num{color:rgba(0,229,160,.2)}
+.proj-stack{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;color:var(--green);
+  letter-spacing:.08em;margin-bottom:.6rem;
+  position:relative;z-index:1;
+}
+.proj-name{
+  font-size:.97rem;font-weight:700;color:var(--text);
+  margin-bottom:.6rem;line-height:1.3;
+  position:relative;z-index:1;
+}
+.proj-desc{
+  font-size:.78rem;color:var(--text2);line-height:1.6;
+  margin-bottom:1.5rem;flex:1;position:relative;z-index:1;
+}
+.proj-link{
+  display:inline-flex;align-items:center;gap:.45rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--green);text-decoration:none;
+  position:relative;z-index:1;transition:gap .2s;
+}
+.proj-link:hover{gap:.7rem}
+
+/* ── EDUCATION ── */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.edu-card{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:8px;padding:1.75rem;
+  transition:all .25s;
+}
+.edu-card:hover{border-color:rgba(0,229,160,.25);transform:translateY(-3px)}
+.edu-degree{
+  font-size:.9rem;font-weight:700;color:var(--text);
+  margin-bottom:.35rem;line-height:1.35;
+}
+.edu-school{font-size:.75rem;color:var(--text2);margin-bottom:.75rem}
+.edu-footer{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:.75rem;border-top:1px solid var(--border);
+}
+.edu-grade{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.75rem;font-weight:600;color:var(--green);
+}
+.edu-year{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;color:var(--text3);
+}
+
+/* ── CERTS ── */
+.certs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.cert-card{
+  display:flex;align-items:center;gap:1.1rem;
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:8px;padding:1.25rem 1.5rem;
+  text-decoration:none;transition:all .2s;
+}
+.cert-card:hover{border-color:rgba(0,229,160,.3);transform:translateX(5px)}
+.cert-icon{
+  width:40px;height:40px;border-radius:6px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+  background:var(--bg2);border:1px solid var(--border);
+  color:var(--green);transition:all .2s;
+}
+.cert-card:hover .cert-icon{background:var(--green2);border-color:var(--green)}
+.cert-icon.gold{color:var(--amber)}
+.cert-card:hover .cert-icon.gold{background:rgba(255,179,71,.1);border-color:var(--amber)}
+.cert-name{font-size:.82rem;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:.2rem}
+.cert-issuer{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--text3);letter-spacing:.05em}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+.contact-info{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:8px;padding:2.5rem;
+}
+.contact-big{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  letter-spacing:.04em;color:var(--text);
+  line-height:1.1;margin-bottom:1rem;
+}
+.contact-big span{color:var(--green)}
+.contact-sub{font-size:.875rem;color:var(--text2);line-height:1.7;margin-bottom:2rem}
+.contact-links{display:flex;flex-direction:column;gap:.75rem}
+.contact-link{
+  display:flex;align-items:center;gap:.75rem;
+  font-size:.83rem;color:var(--text2);text-decoration:none;
+  transition:color .2s;
+}
+.contact-link:hover{color:var(--green)}
+.contact-link i{color:var(--green);width:16px;text-align:center}
+.contact-open{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:8px;padding:2.5rem;
+  display:flex;flex-direction:column;justify-content:space-between;
+  min-height:280px;
+}
+.open-roles-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:1.5rem;
+}
+.open-role{
+  display:flex;align-items:center;gap:.75rem;
+  padding:.75rem 0;border-bottom:1px solid var(--border);
+  font-size:.875rem;color:var(--text2);
+}
+.open-role:last-of-type{border-bottom:none}
+.open-role::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;flex-shrink:0}
+.btn-email{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--green);color:var(--bg);
+  padding:14px;border-radius:6px;text-decoration:none;
+  font-weight:600;text-align:center;margin-top:1.5rem;
+  transition:all .2s;display:block;
+}
+.btn-email:hover{box-shadow:0 0 25px rgba(0,229,160,.3);transform:translateY(-2px)}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border);
+  padding:2rem 2.5rem;position:relative;z-index:1;
+}
+.footer-inner{
+  max-width:1100px;margin:0 auto;
+  display:flex;justify-content:space-between;
+  align-items:center;gap:1rem;flex-wrap:wrap;
+}
+.footer-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.1rem;letter-spacing:.08em;color:var(--text);
+}
+.footer-logo span{color:var(--green)}
+.footer-links{display:flex;gap:2rem}
+.footer-links a{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text3);text-decoration:none;transition:color .2s;
+}
+.footer-links a:hover{color:var(--green)}
+.footer-copy{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;color:var(--text3);letter-spacing:.06em;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.reveal{
+  opacity:0;transform:translateY(28px);
+  transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* hero entrance */
+.h1{animation:slideUp .8s cubic-bezier(.16,1,.3,1) .05s forwards;opacity:0}
+.h2{animation:slideUp .8s cubic-bezier(.16,1,.3,1) .15s forwards;opacity:0}
+.h3{animation:slideUp .8s cubic-bezier(.16,1,.3,1) .25s forwards;opacity:0}
+.h4{animation:slideUp .8s cubic-bezier(.16,1,.3,1) .35s forwards;opacity:0}
+.h5{animation:slideUp .8s cubic-bezier(.16,1,.3,1) .45s forwards;opacity:0}
+.h6{animation:slideUp .8s cubic-bezier(.16,1,.3,1) .55s forwards;opacity:0}
+.h7{animation:scaleIn .8s cubic-bezier(.16,1,.3,1) .25s forwards;opacity:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:2.5rem}
+  .hero-photo-wrap{display:none}
+  .projects-grid{grid-template-columns:1fr 1fr}
+  .edu-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .certs-grid{grid-template-columns:1fr}
+  .stats-strip{grid-template-columns:repeat(2,1fr)}
+  .skills-container{grid-template-columns:1fr}
+  .two-col{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media(max-width:600px){
+  .projects-grid{grid-template-columns:1fr}
+  .stats-strip{grid-template-columns:1fr 1fr}
+  section,.section{padding:60px 1.25rem}
+}
+</style>
 </head>
-<body class="selection:bg-blue-500/30">
+<body>
 
-    <nav id="navbar" class="fixed top-0 w-full z-[100] px-6 py-4 transition-all">
-        <div class="max-w-5xl mx-auto flex justify-between items-center glass rounded-2xl px-6 py-3">
-            <span class="text-lg font-bold tracking-tighter text-white">ADITYA WAGH</span>
-            <div class="hidden md:flex gap-8 text-[11px] font-bold uppercase tracking-widest text-gray-400">
-             <a href="#about">About</a>
-<a href="#education">Education</a>
-<a href="#projects">Projects</a>
-<a href="#experience">Experience</a>
-<a href="#certifications">Certificates</a>
-<a href="#contact">Contact</a>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
 
-            </div>
-            <a href="Aditya_Resume.pdf" download class="bg-blue-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-blue-500 transition">Resume</a>
-        </div>
-    </nav>
-
-    <section id="about" class="pt-44 pb-12 px-6 max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12 text-left">
-        <div class="flex-1">
-            <p class="text-blue-400 font-bold mb-4 uppercase text-xs">Aspiring Software Engineer | Java & SQL Specialist</p>
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight text-white leading-tight">Aditya Wagh</h1>
-          <p class="text-gray-400 text-lg max-w-xl mb-6 leading-relaxed">
-    Final-year Computer Science (Cyber Security) student passionate about Java backend development, database systems, AI-powered applications, and software engineering. Currently learning Spring Boot, LangChain, LangGraph, and Agentic AI while building real-world software projects.
-</p>
-
-<div class="flex flex-wrap gap-2 mb-8">
-    <span class="glass px-3 py-2 rounded-lg text-xs">Java Backend</span>
-    <span class="glass px-3 py-2 rounded-lg text-xs">Spring Boot</span>
-    <span class="glass px-3 py-2 rounded-lg text-xs">SQL</span>
-    <span class="glass px-3 py-2 rounded-lg text-xs">Agentic AI</span>
-    <span class="glass px-3 py-2 rounded-lg text-xs">LangChain</span>
-    <span class="glass px-3 py-2 rounded-lg text-xs">LangGraph</span>
-</div>
-        
-            <div class="flex items-center gap-6">
-                <a href="#projects" class="bg-white text-black px-8 py-3.5 rounded-xl font-bold hover:bg-blue-600 hover:text-white transition-all text-sm">View Projects</a>
-                <div class="flex gap-4">
-                    <a href="https://www.linkedin.com/in/aditya-wagh-853666266" target="_blank" class="text-gray-400 hover:text-white text-xl transition"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/AdityaWagh02" target="_blank" class="text-gray-400 hover:text-white text-xl transition"><i class="fab fa-github"></i></a>
-                    <a href="https://leetcode.com/u/omwagh0211/" target="_blank" class="text-gray-400 hover:text-white text-xl transition"><i class="fas fa-code"></i></a>
-                       <a href="mailto:aditya.wagh0211@gmail.com"
-   target="_blank"
-   class="text-gray-400 hover:text-white text-xl transition">
-    <i class="fas fa-envelope"></i>
-</a>
-                </div>
-            </div>
-        </div>
-        <div class="relative">
-            <div class="w-64 h-64 md:w-80 md:h-80 rounded-3xl overflow-hidden border-2 border-white/10 p-2">
-                <img src="Aditya_Photo.png" alt="Aditya Wagh" class="w-full h-full object-cover rounded-2xl">
-            </div>
-        </div>
-    </section>
-
-    <section id="education" class="px-6 max-w-5xl mx-auto py-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="glass rounded-3xl p-8">
-            <h2 class="text-xl font-bold mb-6 text-white flex items-center gap-2">
-                <i class="fas fa-graduation-cap text-blue-500"></i> Education
-            </h2>
-            <div class="space-y-6">
-                <div>
-                    <h3 class="font-bold text-white text-sm">Bachelor of Technology in Computer Science (Cyber Security)</h3>
-                    <p class="text-gray-400 text-xs">G.H. Raisoni College of Engineering and Management, Pune</p>
-                    <div class="flex justify-between mt-2 text-[10px] font-bold">
-                        <span class="text-blue-400">CGPA: 8.43/10</span>
-                        <span class="text-gray-500">2022-2026</span>
-                    </div>
-                </div>
-                <div class="border-t border-white/5 pt-4">
-                    <h3 class="font-bold text-white text-sm">Higher Secondary Certificate (HSC)</h3>
-                    <p class="text-gray-400 text-xs">State Board of Maharashtra</p>
-                    <div class="flex justify-between mt-2 text-[10px] font-bold">
-                        <span class="text-blue-400">61.50%</span>
-                        <span class="text-gray-500">2020-2022</span>
-                    </div>
-                </div>
-                <div class="border-t border-white/5 pt-4">
-                    <h3 class="font-bold text-white text-sm">Secondary School Certificate (SSC)</h3>
-                    <p class="text-gray-400 text-xs">State Board of Maharashtra</p>
-                    <div class="flex justify-between mt-2 text-[10px] font-bold">
-                        <span class="text-blue-400">80.80%</span>
-                        <span class="text-gray-500">2019-2020</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="glass rounded-3xl p-8">
-            <h2 class="text-xl font-bold mb-6 text-white flex items-center gap-2">
-                <i class="fas fa-code text-blue-500"></i> Technical Skills
-            </h2>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="flex items-center gap-3 glass p-3 rounded-xl border-white/5">
-                    <i class="fab fa-java text-orange-500 text-xl"></i>
-                    <span class="text-xs font-bold">Java</span>
-                </div>
-                <div class="flex items-center gap-3 glass p-3 rounded-xl border-white/5">
-                    <i class="fab fa-python text-yellow-400 text-xl"></i>
-                    <span class="text-xs font-bold">Python</span>
-                </div>
-                <div class="flex items-center gap-3 glass p-3 rounded-xl border-white/5">
-                    <i class="fas fa-database text-blue-400 text-xl"></i>
-                    <span class="text-xs font-bold">SQL</span>
-                </div>
-                <div class="flex items-center gap-3 glass p-3 rounded-xl border-white/5">
-                    <i class="fab fa-linux text-white text-xl"></i>
-                    <span class="text-xs font-bold">Linux</span>
-                </div>
-                <div class="flex items-center gap-3 glass p-3 rounded-xl border-white/5">
-                    <i class="fab fa-github text-white text-xl"></i>
-                    <span class="text-xs font-bold">Git/GitHub</span>
-                </div>
-                <div class="flex items-center gap-3 glass p-3 rounded-xl border-white/5">
-                    <i class="fas fa-network-wired text-green-400 text-xl"></i>
-                    <span class="text-xs font-bold">REST API</span>
-                </div>
-            </div>
-        </div>
-    </section>
-<section class="px-6 max-w-5xl mx-auto py-12">
-    <h2 class="text-2xl font-bold mb-8 text-white flex items-center gap-2">
-        <i class="fas fa-rocket text-blue-500"></i> Learning & Exploring
-    </h2>
-    <div class="flex flex-wrap gap-3">
-        <span class="glass px-4 py-2 rounded-xl">Spring Boot</span>
-        <span class="glass px-4 py-2 rounded-xl">Hibernate/JPA</span>
-        <span class="glass px-4 py-2 rounded-xl">Spring Security</span>
-        <span class="glass px-4 py-2 rounded-xl">LangChain</span>
-        <span class="glass px-4 py-2 rounded-xl">LangGraph</span>
-        <span class="glass px-4 py-2 rounded-xl">Agentic AI</span>
-        <span class="glass px-4 py-2 rounded-xl">RAG</span>
-        <span class="glass px-4 py-2 rounded-xl">Docker</span>
-    </div>
-</section>
-<section id="experience" class="px-6 max-w-5xl mx-auto py-12">
-    <h2 class="text-2xl font-bold mb-8 text-white flex items-center gap-2">
-        <i class="fas fa-briefcase text-blue-500"></i> Experience
-    </h2>
-<div class="glass rounded-3xl p-8 border-l-4 border-l-blue-600">
-    <div class="flex flex-col md:flex-row justify-between mb-4">
-        <div>
-            <h3 class="text-xl font-bold text-white">Technical Intern</h3>
-            <p class="text-blue-400 text-sm font-medium">GlobalTech Infinity Systems, Pune</p>
-        </div>
-        <span class="text-gray-500 text-xs font-bold mt-2 md:mt-0 uppercase tracking-widest">
-            Dec 2025 — Jun 2026
-        </span>
-    </div>
-
-    <ul class="space-y-3 text-sm text-gray-400">
-        <li>• Participated in internship training and technical assignments related to software development and IT operations.</li>
-        <li>• Gained exposure to database fundamentals, software documentation, debugging, and troubleshooting techniques.</li>
-        <li>• Prepared technical reports and collaborated with team members on assigned deliverables.</li>
-        <li>• Learned industry-standard development workflows, tools, and best practices.</li>
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#about" class="nav-logo">ADITYA<span>.</span>W</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
+    <a href="Aditya_Resume.pdf" download class="nav-cta">Resume ↓</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="about" style="position:relative;z-index:1">
+  <div style="max-width:1100px;margin:0 auto;padding:120px 2.5rem 80px">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-status h1">
+          <span class="hero-status-dot"></span>
+          Open to Opportunities
+        </div>
+        <h1 class="hero-name h2">
+          Aditya
+          <span class="accent">Wagh.</span>
+        </h1>
+        <p class="hero-role h3">
+          <span>></span> Java Developer / Backend Engineer / Database Enthusiast
+        </p>
+        <p class="hero-bio h4">
+          Final-year Computer Science (Cyber Security) student at G.H. Raisoni College, Pune. Passionate about Java backend development, database systems, and AI-powered applications. Building real-world projects while exploring Spring Boot, LangChain, and Agentic AI.
+        </p>
+        <div class="hero-tags h5">
+          <span class="hero-tag">Java Backend</span>
+          <span class="hero-tag">SQL &amp; MySQL</span>
+          <span class="hero-tag">Spring Boot</span>
+          <span class="hero-tag">REST APIs</span>
+          <span class="hero-tag">Agentic AI</span>
+          <span class="hero-tag">LangChain</span>
+        </div>
+        <div class="hero-actions h6">
+          <a href="#projects" class="btn-primary">View Projects</a>
+          <a href="Aditya_Resume.pdf" download class="btn-ghost">Download CV</a>
+        </div>
+        <div class="hero-socials h6" style="margin-top:1.25rem">
+          <a href="https://www.linkedin.com/in/aditya-wagh-853666266" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/AdityaWagh02" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://leetcode.com/u/omwagh0211/" target="_blank" title="LeetCode"><i class="fas fa-code"></i></a>
+          <a href="mailto:aditya.wagh0211@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="hero-photo-wrap h7">
+        <div class="hero-photo-frame">
+          <img src="Aditya_Photo.png" alt="Aditya Wagh">
+        </div>
+        <div class="hero-photo-corner"></div>
+        <div class="hero-photo-corner2"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-icon"><i class="fas fa-trophy"></i></span>
+          <div>
+            <div class="hero-stat-num">110+</div>
+            <div class="hero-stat-label">LeetCode</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div style="max-width:1100px;margin:0 auto;padding:0 2.5rem;position:relative;z-index:1" class="reveal">
+  <div class="stats-strip">
+    <div class="stat-block">
+      <div class="stat-num">110+</div>
+      <div class="stat-label">LeetCode Problems</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">6+</div>
+      <div class="stat-label">Projects Built</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Certifications</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">8.43</div>
+      <div class="stat-label">CGPA / 10</div>
+    </div>
+  </div>
 </div>
 
-</section>
+<div class="sec-line" style="margin-top:5rem"></div>
 
-
-<section id="projects" class="px-6 max-w-5xl mx-auto py-12">
-    <h2 class="text-2xl font-bold mb-8 text-white flex items-center gap-2">
-        <i class="fas fa-laptop-code text-blue-500"></i> Projects
-    </h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-        <!-- Hot Rolling Defect Detection -->
-        <div class="glass rounded-3xl p-8 project-card">
-            <h3 class="text-lg font-bold mb-3 text-white">
-                Hot Rolling Defect Detection
-            </h3>
-            <p class="text-xs text-gray-400 mb-4 italic">
-                Deep Learning • Computer Vision • Python
-            </p>
-            <p class="text-sm text-gray-500 mb-6 leading-relaxed">
-                Developed an automated defect detection system for steel manufacturing using deep learning and computer vision techniques to identify surface defects and improve quality control.
-            </p>
-            <a href="https://github.com/AdityaWagh02/hot-rolling-defect-detection"
-               target="_blank"
-               class="text-[10px] font-bold uppercase text-blue-500">
-               View Code <i class="fas fa-arrow-right ml-1"></i>
-            </a>
-        </div>
-
-        <!-- AI Fake News Detection -->
-        <div class="glass rounded-3xl p-8 project-card">
-            <h3 class="text-lg font-bold mb-3 text-white">
-                AI Fake News Detection System
-            </h3>
-            <p class="text-xs text-gray-400 mb-4 italic">
-                Python • Machine Learning • Streamlit
-            </p>
-            <p class="text-sm text-gray-500 mb-6 leading-relaxed">
-                Built a fake news classification platform using TF-IDF, Logistic Regression, SVM and Ensemble learning models with high prediction accuracy and a Streamlit interface.
-            </p>
-            <a href="https://github.com/AdityaWagh02/AI-Fake-News-Detection-System"
-               target="_blank"
-               class="text-[10px] font-bold uppercase text-blue-500">
-               View Code <i class="fas fa-arrow-right ml-1"></i>
-            </a>
-        </div>
-
-        <!-- Smart Surveillance -->
-        <div class="glass rounded-3xl p-8 project-card">
-            <h3 class="text-lg font-bold mb-3 text-white">
-                Smart Surveillance System
-            </h3>
-            <p class="text-xs text-gray-400 mb-4 italic">
-                YOLO • OpenCV • Python
-            </p>
-            <p class="text-sm text-gray-500 mb-6 leading-relaxed">
-                Real-time surveillance solution for missing person and criminal detection using YOLO object detection and automated alert generation.
-            </p>
-            <a href="https://github.com/AdityaWagh02/Smart-Surveillance-System-for-Missing-Persons-Criminal-Detection-with-Real-Time-Alerting"
-               target="_blank"
-               class="text-[10px] font-bold uppercase text-blue-500">
-               View Code <i class="fas fa-arrow-right ml-1"></i>
-            </a>
-        </div>
-
-        <!-- SmartAttend -->
-        <div class="glass rounded-3xl p-8 project-card">
-            <h3 class="text-lg font-bold mb-3 text-white">
-                SmartAttend Face & QR Attendance Manager
-            </h3>
-            <p class="text-xs text-gray-400 mb-4 italic">
-                Python • Face Recognition • MySQL
-            </p>
-            <p class="text-sm text-gray-500 mb-6 leading-relaxed">
-                Attendance management system integrating facial recognition and QR verification with secure MySQL database storage and reporting.
-            </p>
-            <a href="https://github.com/AdityaWagh02/SmartAttend-Face-QR-Attendance-Manager"
-               target="_blank"
-               class="text-[10px] font-bold uppercase text-blue-500">
-               View Code <i class="fas fa-arrow-right ml-1"></i>
-            </a>
-        </div>
-
-        <!-- Enterprise Expense System -->
-        <div class="glass rounded-3xl p-8 project-card">
-            <h3 class="text-lg font-bold mb-3 text-white">
-                Enterprise Expense & Audit Management System
-            </h3>
-            <p class="text-xs text-gray-400 mb-4 italic">
-                Python • SQL • Enterprise Application
-            </p>
-            <p class="text-sm text-gray-500 mb-6 leading-relaxed">
-                Enterprise-level expense tracking and audit management platform featuring role-based access control, approval workflows, and reporting dashboards.
-            </p>
-            <a href="https://github.com/AdityaWagh02/Enterprise-expense-and-audit-management-system"
-               target="_blank"
-               class="text-[10px] font-bold uppercase text-blue-500">
-               View Code <i class="fas fa-arrow-right ml-1"></i>
-            </a>
-        </div>
-
-        <!-- NexGensis Delivery -->
-        <div class="glass rounded-3xl p-8 project-card">
-            <h3 class="text-lg font-bold mb-3 text-white">
-                NexGensis Delivery Management System
-            </h3>
-            <p class="text-xs text-gray-400 mb-4 italic">
-                Python • Data Processing • Analytics
-            </p>
-            <p class="text-sm text-gray-500 mb-6 leading-relaxed">
-                Delivery optimization and management platform featuring route analysis, reporting, performance tracking, and automated operational insights.
-            </p>
-            <a href="https://github.com/AdityaWagh02/nexgensis-delivery-system"
-               target="_blank"
-               class="text-[10px] font-bold uppercase text-blue-500">
-               View Code <i class="fas fa-arrow-right ml-1"></i>
-            </a>
-        </div>
-
+<!-- SKILLS -->
+<div class="section" id="skills">
+  <div class="sec-head reveal">
+    <div class="sec-eyebrow">Stack</div>
+    <div class="sec-title">Technical Skills</div>
+  </div>
+  <div class="skills-container reveal">
+    <div>
+      <div class="skill-group-title">Languages & Databases</div>
+      <div class="skill-pills">
+        <span class="skill-pill"><i class="fab fa-java" style="color:#e76f00"></i>Java</span>
+        <span class="skill-pill"><i class="fab fa-python" style="color:#4b8bbe"></i>Python</span>
+        <span class="skill-pill"><i class="fas fa-database" style="color:#00e5a0"></i>SQL</span>
+        <span class="skill-pill"><i class="fas fa-database" style="color:#4479a1"></i>MySQL</span>
+        <span class="skill-pill"><i class="fas fa-plug" style="color:#aaa"></i>JDBC</span>
+      </div>
     </div>
-</section>
-
-    <section id="certifications" class="px-6 max-w-5xl mx-auto py-12">
-        <h2 class="text-2xl font-bold mb-8 text-white flex items-center gap-2">
-            <i class="fas fa-certificate text-blue-500"></i> Certifications & Achievements
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <a href="https://badger.learning.sap.com/verify/xikel-nyhif-bypot-butyn-kevip" target="_blank" class="glass p-6 rounded-2xl flex items-center gap-4 hover:border-blue-500 transition">
-                <i class="fas fa-award text-2xl text-blue-500"></i>
-                <div>
-                    <p class="text-sm font-bold">Deepening ABAP Programming Knowledge</p>
-                    <p class="text-[10px] text-gray-500">SAP Certification</p>
-                </div>
-            </a>
-            <a href="https://badger.learning.sap.com/verify/xulyg-selot-gavol-cebut-mitop" target="_blank" class="glass p-6 rounded-2xl flex items-center gap-4 hover:border-blue-500 transition">
-                <i class="fas fa-award text-2xl text-blue-500"></i>
-                <div>
-                    <p class="text-sm font-bold">Basic ABAP Programming</p>
-                    <p class="text-[10px] text-gray-500">SAP Certification</p>
-                </div>
-            </a>
-            <a href="https://www.credly.com/badges/d7b18e4d-8c6d-442d-b813-9f247b2c654b" target="_blank" class="glass p-6 rounded-2xl flex items-center gap-4 hover:border-blue-500 transition">
-                <i class="fas fa-award text-2xl text-blue-500"></i>
-                <div>
-                    <p class="text-sm font-bold">Web Development Fundamentals</p>
-                    <p class="text-[10px] text-gray-500">IBM Certification</p>
-                </div>
-            </a>
-            <div class="glass p-6 rounded-2xl flex items-center gap-4">
-                <i class="fas fa-trophy text-2xl text-yellow-500"></i>
-                <div>
-                    <p class="text-sm font-bold">100+ Problems Solved</p>
-                    <p class="text-[10px] text-gray-500">LeetCode Achievement</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    </h2>
-
-  <section class="px-6 max-w-5xl mx-auto py-12">
-    <h2 class="text-2xl font-bold mb-8 text-white">
-        Highlights
-    </h2>
-
-    <div class="glass rounded-3xl p-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-
-            <div>
-                <h3 class="text-3xl font-bold text-blue-400">110+</h3>
-                <p class="text-xs text-gray-400">LeetCode Problems</p>
-            </div>
-
-            <div>
-                <h3 class="text-3xl font-bold text-blue-400">6+</h3>
-                <p class="text-xs text-gray-400">Projects</p>
-            </div>
-
-            <div>
-                <h3 class="text-3xl font-bold text-blue-400">3</h3>
-                <p class="text-xs text-gray-400">Certifications</p>
-            </div>
-
-            <div>
-                <h3 class="text-3xl font-bold text-blue-400">8.43</h3>
-                <p class="text-xs text-gray-400">CGPA</p>
-            </div>
-
-        </div>
+    <div>
+      <div class="skill-group-title">Tools & Concepts</div>
+      <div class="skill-pills">
+        <span class="skill-pill"><i class="fab fa-github"></i>Git / GitHub</span>
+        <span class="skill-pill"><i class="fab fa-linux"></i>Linux CLI</span>
+        <span class="skill-pill"><i class="fas fa-network-wired" style="color:#00e5a0"></i>REST APIs</span>
+        <span class="skill-pill"><i class="fas fa-cubes" style="color:#aaa"></i>OOP</span>
+        <span class="skill-pill"><i class="fas fa-project-diagram" style="color:#aaa"></i>DBMS</span>
+        <span class="skill-pill"><i class="fas fa-code" style="color:#aaa"></i>DSA</span>
+      </div>
     </div>
-</section>
-</section>
-<section id="contact" class="px-6 max-w-5xl mx-auto py-12">
-    <h2 class="text-2xl font-bold mb-8 text-white flex items-center gap-2">
-        <i class="fas fa-envelope text-blue-500"></i> Contact
-    </h2>
-
-    <div class="glass rounded-3xl p-8 text-center">
-        <h3 class="text-xl font-bold text-white mb-4">
-            Let's Build Something Amazing
-        </h3>
-
-        <p class="text-gray-400 mb-6">
-            Open to Software Developer, Java Developer, Backend Developer and AI/ML opportunities.
-        </p>
-
-        <div class="flex flex-wrap justify-center gap-4">
-            <a href="mailto:aditya.wagh0211@gmail.com"
-               class="bg-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-blue-500 transition">
-               Email Me
-            </a>
-<a href="https://github.com/AdityaWagh02"
-   target="_blank"
-   class="glass px-6 py-3 rounded-xl font-semibold">
-   GitHub
-</a>
-            <a href="https://www.linkedin.com/in/aditya-wagh-853666266"
-               target="_blank"
-               class="glass px-6 py-3 rounded-xl font-semibold">
-               LinkedIn
-            </a>
-        </div>
+  </div>
+  <div class="learning-strip reveal">
+    <div class="learning-title">⚡ Currently Learning &amp; Exploring</div>
+    <div class="learning-pills">
+      <span class="learning-pill">Spring Boot</span>
+      <span class="learning-pill">Hibernate / JPA</span>
+      <span class="learning-pill">Spring Security</span>
+      <span class="learning-pill">LangChain</span>
+      <span class="learning-pill">LangGraph</span>
+      <span class="learning-pill">Agentic AI</span>
+      <span class="learning-pill">RAG Applications</span>
+      <span class="learning-pill">Docker</span>
     </div>
-</section>
-    <footer class="py-10 text-center border-t border-white/5 text-gray-600 text-[10px] uppercase tracking-widest">
-        Aditya Wagh • Pune, India
-    </footer>
+  </div>
+</div>
 
-    <script>
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 20) { nav.classList.add('nav-scrolled'); }
-            else { nav.classList.remove('nav-scrolled'); }
-        });
-    </script>
+<div class="sec-line"></div>
+
+<!-- EXPERIENCE -->
+<div class="section" id="experience">
+  <div class="sec-head reveal">
+    <div class="sec-eyebrow">Work</div>
+    <div class="sec-title">Experience</div>
+  </div>
+  <div class="exp-card reveal">
+    <div class="exp-header">
+      <div>
+        <div class="exp-role">Technical Intern</div>
+        <div class="exp-company">GlobalTech Infinity Systems · Pune</div>
+      </div>
+      <span class="exp-badge">Dec 2025 — Jun 2026</span>
+    </div>
+    <ul class="exp-list">
+      <li class="exp-item">Participated in internship training and technical assignments related to software development and IT operations.</li>
+      <li class="exp-item">Gained exposure to database fundamentals, software documentation, debugging, and troubleshooting techniques.</li>
+      <li class="exp-item">Prepared technical reports and collaborated with team members on assigned deliverables.</li>
+      <li class="exp-item">Learned industry-standard development workflows, tools, and best practices.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- PROJECTS -->
+<div class="section" id="projects">
+  <div class="sec-head reveal">
+    <div class="sec-eyebrow">Work Samples</div>
+    <div class="sec-title">Projects</div>
+  </div>
+  <div class="projects-grid">
+
+    <div class="proj-card reveal">
+      <div class="proj-num">01</div>
+      <div class="proj-stack">Deep Learning · Computer Vision · Python</div>
+      <div class="proj-name">Hot Rolling Defect Detection</div>
+      <div class="proj-desc">Automated defect detection system for steel manufacturing using deep learning and computer vision to identify surface defects and improve quality control.</div>
+      <a href="https://github.com/AdityaWagh02/hot-rolling-defect-detection" target="_blank" class="proj-link">View Code <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="proj-card reveal">
+      <div class="proj-num">02</div>
+      <div class="proj-stack">Python · ML · Streamlit</div>
+      <div class="proj-name">AI Fake News Detection System</div>
+      <div class="proj-desc">Fake news classification platform using TF-IDF, Logistic Regression, SVM and Ensemble learning with high accuracy and a Streamlit interface.</div>
+      <a href="https://github.com/AdityaWagh02/AI-Fake-News-Detection-System" target="_blank" class="proj-link">View Code <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="proj-card reveal">
+      <div class="proj-num">03</div>
+      <div class="proj-stack">YOLO · OpenCV · Python</div>
+      <div class="proj-name">Smart Surveillance System</div>
+      <div class="proj-desc">Real-time surveillance for missing person and criminal detection using YOLO object detection with automated alert generation.</div>
+      <a href="https://github.com/AdityaWagh02/Smart-Surveillance-System-for-Missing-Persons-Criminal-Detection-with-Real-Time-Alerting" target="_blank" class="proj-link">View Code <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="proj-card reveal">
+      <div class="proj-num">04</div>
+      <div class="proj-stack">Python · Face Recognition · MySQL</div>
+      <div class="proj-name">SmartAttend Face &amp; QR Attendance</div>
+      <div class="proj-desc">Attendance system integrating facial recognition and QR verification with secure MySQL database storage and reporting.</div>
+      <a href="https://github.com/AdityaWagh02/SmartAttend-Face-QR-Attendance-Manager" target="_blank" class="proj-link">View Code <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="proj-card reveal">
+      <div class="proj-num">05</div>
+      <div class="proj-stack">Python · SQL · Enterprise App</div>
+      <div class="proj-name">Enterprise Expense &amp; Audit System</div>
+      <div class="proj-desc">Expense tracking and audit management platform with role-based access control, approval workflows, and reporting dashboards.</div>
+      <a href="https://github.com/AdityaWagh02/Enterprise-expense-and-audit-management-system" target="_blank" class="proj-link">View Code <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="proj-card reveal">
+      <div class="proj-num">06</div>
+      <div class="proj-stack">Java · SQL · MySQL</div>
+      <div class="proj-name">HRMS / Job Portal</div>
+      <div class="proj-desc">HR Management System supporting employee management, job postings, application tracking, and database-driven record management with CRUD operations.</div>
+      <a href="https://github.com/AdityaWagh02/HRMS-JobPortal" target="_blank" class="proj-link">View Code <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- EDUCATION -->
+<div class="section" id="education">
+  <div class="sec-head reveal">
+    <div class="sec-eyebrow">Background</div>
+    <div class="sec-title">Education</div>
+  </div>
+  <div class="edu-grid reveal">
+    <div class="edu-card" style="grid-column:1/-1">
+      <div class="edu-degree">Bachelor of Technology — Computer Science (Cyber Security)</div>
+      <div class="edu-school">G.H. Raisoni College of Engineering and Management, Pune</div>
+      <div class="edu-footer">
+        <span class="edu-grade">CGPA: 8.43 / 10</span>
+        <span class="edu-year">2022 – 2026</span>
+      </div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Higher Secondary Certificate (HSC)</div>
+      <div class="edu-school">State Board of Maharashtra</div>
+      <div class="edu-footer">
+        <span class="edu-grade">61.50%</span>
+        <span class="edu-year">2020 – 2022</span>
+      </div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Secondary School Certificate (SSC)</div>
+      <div class="edu-school">State Board of Maharashtra</div>
+      <div class="edu-footer">
+        <span class="edu-grade">80.80%</span>
+        <span class="edu-year">2019 – 2020</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- CERTIFICATIONS -->
+<div class="section" id="certifications">
+  <div class="sec-head reveal">
+    <div class="sec-eyebrow">Credentials</div>
+    <div class="sec-title">Certifications &amp; Achievements</div>
+  </div>
+  <div class="certs-grid reveal">
+    <a href="https://badger.learning.sap.com/verify/xikel-nyhif-bypot-butyn-kevip" target="_blank" class="cert-card">
+      <div class="cert-icon"><i class="fas fa-award"></i></div>
+      <div>
+        <div class="cert-name">Deepening ABAP Programming Knowledge</div>
+        <div class="cert-issuer">SAP · Verified</div>
+      </div>
+    </a>
+    <a href="https://badger.learning.sap.com/verify/xulyg-selot-gavol-cebut-mitop" target="_blank" class="cert-card">
+      <div class="cert-icon"><i class="fas fa-award"></i></div>
+      <div>
+        <div class="cert-name">Basic ABAP Programming</div>
+        <div class="cert-issuer">SAP · Verified</div>
+      </div>
+    </a>
+    <a href="https://www.credly.com/badges/d7b18e4d-8c6d-442d-b813-9f247b2c654b" target="_blank" class="cert-card">
+      <div class="cert-icon"><i class="fas fa-award"></i></div>
+      <div>
+        <div class="cert-name">Web Development Fundamentals</div>
+        <div class="cert-issuer">IBM · Credly Verified</div>
+      </div>
+    </a>
+    <div class="cert-card" style="cursor:default">
+      <div class="cert-icon gold"><i class="fas fa-trophy"></i></div>
+      <div>
+        <div class="cert-name">110+ Problems Solved</div>
+        <div class="cert-issuer">LeetCode Achievement</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-line"></div>
+
+<!-- CONTACT -->
+<div class="section" id="contact">
+  <div class="sec-head reveal">
+    <div class="sec-eyebrow">Get In Touch</div>
+    <div class="sec-title">Contact</div>
+  </div>
+  <div class="contact-grid reveal">
+    <div class="contact-info">
+      <div class="contact-big">Let's Build<br><span>Something Amazing</span></div>
+      <p class="contact-sub">Open to Software Developer, Java Developer, Backend Developer and AI/ML opportunities. I reply fast.</p>
+      <div class="contact-links">
+        <a href="mailto:aditya.wagh0211@gmail.com" class="contact-link"><i class="fas fa-envelope"></i>aditya.wagh0211@gmail.com</a>
+        <a href="https://www.linkedin.com/in/aditya-wagh-853666266" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i>linkedin.com/in/aditya-wagh</a>
+        <a href="https://github.com/AdityaWagh02" target="_blank" class="contact-link"><i class="fab fa-github"></i>github.com/AdityaWagh02</a>
+        <a href="https://leetcode.com/u/omwagh0211/" target="_blank" class="contact-link"><i class="fas fa-code"></i>leetcode.com/omwagh0211</a>
+      </div>
+    </div>
+    <div class="contact-open">
+      <div>
+        <div class="open-roles-title">Open For</div>
+        <div class="open-role">Java Developer (Fresher)</div>
+        <div class="open-role">Backend Developer</div>
+        <div class="open-role">Software Engineer Trainee</div>
+        <div class="open-role">AI / ML Engineer</div>
+      </div>
+      <a href="mailto:aditya.wagh0211@gmail.com" class="btn-email">Send Me an Email →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">ADITYA<span>.</span>W</span>
+    <div class="footer-links">
+      <a href="https://github.com/AdityaWagh02" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/aditya-wagh-853666266" target="_blank">LinkedIn</a>
+      <a href="https://leetcode.com/u/omwagh0211/" target="_blank">LeetCode</a>
+    </div>
+    <span class="footer-copy">Aditya Wagh · Pune, India</span>
+  </div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursor-ring');
+let rx=0,ry=0,cx=0,cy=0;
+document.addEventListener('mousemove', e => { cx=e.clientX; cy=e.clientY; cursor.style.left=cx+'px'; cursor.style.top=cy+'px'; });
+(function animRing(){
+  rx += (cx-rx)*.12; ry += (cy-ry)*.12;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,button,.proj-card,.cert-card,.skill-pill').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='18px';cursor.style.height='18px';ring.style.width='52px';ring.style.height='52px';ring.style.opacity='.5'});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='10px';cursor.style.height='10px';ring.style.width='36px';ring.style.height='36px';ring.style.opacity='1'});
+});
+
+// Nav scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40);
+});
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Active nav
+const secs = document.querySelectorAll('[id]');
+const navAs= document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{ if(window.scrollY>=s.offsetTop-120) cur=s.id; });
+  navAs.forEach(a=>{ a.style.color=a.getAttribute('href')==='#'+cur?'var(--green)':''; });
+});
+</script>
 </body>
 </html>
